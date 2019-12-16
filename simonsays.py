@@ -131,61 +131,7 @@ def main():
     gameOver.draw(win)
     win.getKey()
     win.close()
-
-    # point1 = Point(250, 250)
-    # point2 = Point(800, 400)
-    # rectangle = Rectangle(point1, point2)
-
-    # polygon = Polygon(Point(40,40),
-    # Point(100,100),
-    # Point(40, 100),
-    # Point(0, 60))
-    # Drawing Polygon
-    # polygon.setFill('Cyan')
-    # polygon.setOutline('White')
-    # polygon.setWidth(2)
-    # polygon.draw(win)
-
-    # rectangle.setOutline(color_rgb(0, 255, 255))                            # Drawing Rectangle
-    # rectangle.draw(win)
-
-    # colors=["Blue", "Red", "Yellow"]
-    # for n in colors:
-    # win.getMouse()
-    # polygon.setFill(n)
-
-    # text = Text(Point(300, 300), "In a galaxy far far away ...")
-    # text.setTextColor('Cyan')                                               # Drawing Text
-    # text.setSize(30)
-    # text.setFace('helvetica')
-    # text.draw(win)
-
-    # img = Image(Point(200, 200), "Image.png")
-    # img.draw(win)                                                           # Drawing Image
-
-    # input_box = Entry(Point(250, 250), 20)
-    # input_box.draw(win)
-    # input = input_box.getText()
-
-    # txt = Text(Point(300, 300), "")
-    # txt.setTextColor('White')
-    # txt.draw(win)
-
-    # while True:
-    #    txt.setText(input_box.getText())
-    # def correct():
-    #    for i in range(3):
-    #        redButton.setFill(color_rgb(0, 255, 0))
-    #        yellowButton.setFill(color_rgb(0, 255, 0))
-    #        greenButton.setFill(color_rgb(0, 255, 0))
-    #        blueButton.setFill(color_rgb(0, 255, 0))
-    #        time.sleep(.500)
-    #        redButton.setFill(color_rgb(0, 0, 0))
-    #        yellowButton.setFill(color_rgb(0, 0, 0))
-    #        greenButton.setFill(color_rgb(0, 0, 0))
-    #        blueButton.setFill(color_rgb(0, 0, 0))
-    #        time.sleep(.500)
-
+    
     # def gameOver():
     #    gameOver = Text(Point(480, 360), "GAME OVER")
     #    gameOver.setSize(30)
