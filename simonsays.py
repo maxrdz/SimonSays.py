@@ -3,29 +3,55 @@ from random import *  # Imports random library from Python
 import winsound  # Imports Windows Sound library to make beeps, only on windows computer.
 
 
+colorsDict = {"R": color_rgb(255, 0, 0), "Y": color_rgb(255, 255, 0), "G": color_rgb(0, 255, 0), "B": color_rgb(0, 0, 255)}
+
+class button:
+
+    def __init__(self, name, color, coord_x, coord_y, radius, init_on, beep_freq, window):
+        self.name = name
+        self.window = window
+        self.circle = Circle(Point(coord_x, coord_y), radius)
+        self.on = init_on
+        self.color = color
+        self.beep_freq = beep_freq
+        if self.on:
+            self.circle.setFill(color)
+        else:
+            self.circle.setFill(color_rgb(0, 0, 0))
+        self.circle.setOutline(color_rgb(255, 255, 255))
+        self.circle.setWidth(3)
+        self.circle.draw(self.window)
+
+    def turn_on(self):
+        self.circle.setFill(self.color)
+        self.on = True
+
+    def turn_off(self):
+        self.circle.setFill(color_rgb(0, 0, 0))
+        self.on = False
+
+    def blink(self, beep_interval, wait_interval):
+        if self.on:
+            self.turn_off()
+            winsound.Beep(self.beep_freq, beep_interval)
+            self.turn_on()
+            time.sleep(wait_interval)
+        else:
+            self.turn_on()
+            winsound.Beep(self.beep_freq, beep_interval)
+            self.turn_off()
+            time.sleep(wait_interval)
+
 def main():
     win = GraphWin("Simon Says", 970, 600)
     win.setBackground('Black')
 
-    redButton = Circle(Point(250, 200), 50)
-    redButton.setFill(color_rgb(0, 0, 0))
-    redButton.setOutline(color_rgb(255, 255, 255))
-    redButton.setWidth(3)
+    redButton = button("R", colorsDict.get("R",0), 250, 200, 50, False, 1000, win)
+    yellowButton = button("Y", colorsDict.get("Y", 0), 400, 200, 50, False, 1300, win)
+    greenButton = button("G", colorsDict.get("G", 0), 550, 200, 50, False, 1500, win)
+    blueButton = button("B", colorsDict.get("B", 0), 700, 200, 50, False, 2000, win)
 
-    yellowButton = Circle(Point(400, 200), 50)
-    yellowButton.setFill(color_rgb(0, 0, 0))
-    yellowButton.setOutline(color_rgb(255, 255, 255))
-    yellowButton.setWidth(3)
-
-    greenButton = Circle(Point(550, 200), 50)
-    greenButton.setFill(color_rgb(0, 0, 0))
-    greenButton.setOutline(color_rgb(255, 255, 255))
-    greenButton.setWidth(3)
-
-    blueButton = Circle(Point(700, 200), 50)
-    blueButton.setFill(color_rgb(0, 0, 0))
-    blueButton.setOutline(color_rgb(255, 255, 255))
-    blueButton.setWidth(3)
+    buttonDict = {redButton.name: redButton, yellowButton.name: yellowButton, greenButton.name: greenButton, blueButton.name: blueButton}
 
     counter = Text(Point(880, 75), "0")
     counter.setSize(30)
@@ -35,11 +61,6 @@ def main():
     counterBorder.setFill("White")
     counterBorder.setOutline("Red")
     counterBorder.setWidth(2)
-
-    blueButton.draw(win)
-    greenButton.draw(win)
-    yellowButton.draw(win)
-    redButton.draw(win)
     counterBorder.draw(win)
     counter.draw(win)
 
@@ -74,26 +95,7 @@ def main():
         stack.append(colors[randint(0, 3)])
 
         for color in stack:
-            if color == "R":
-                redButton.setFill(color_rgb(255, 0, 0))
-                winsound.Beep(1000, 500)
-                redButton.setFill(color_rgb(0, 0, 0))
-                time.sleep(playbackInterval)
-            elif color == "Y":
-                yellowButton.setFill(color_rgb(255, 255, 0))
-                winsound.Beep(1300, 500)
-                yellowButton.setFill(color_rgb(0, 0, 0))
-                time.sleep(playbackInterval)
-            elif color == "G":
-                greenButton.setFill(color_rgb(0, 255, 0))
-                winsound.Beep(1500, 500)
-                greenButton.setFill(color_rgb(0, 0, 0))
-                time.sleep(playbackInterval)
-            elif color == "B":
-                blueButton.setFill(color_rgb(0, 0, 255))
-                winsound.Beep(2000, 500)
-                blueButton.setFill(color_rgb(0, 0, 0))
-                time.sleep(playbackInterval)
+            buttonDict.get(color, None).blink(500, playbackInterval)
 
         instructions = Text(Point(480, 360), "'R' for Red, 'Y' for yellow, 'G' for Green, 'B' for blue.")
         instructions.setSize(25)
@@ -104,22 +106,7 @@ def main():
             keyStroked = win.getKey()
             instructions.undraw()
             if keyStroked.upper() == count:
-                if count == "R":
-                    redButton.setFill(color_rgb(255, 0, 0))
-                    winsound.Beep(1000, 300)
-                    redButton.setFill(color_rgb(0, 0, 0))
-                elif count == "Y":
-                    yellowButton.setFill(color_rgb(255, 255, 0))
-                    winsound.Beep(1300, 300)
-                    yellowButton.setFill(color_rgb(0, 0, 0))
-                elif count == "G":
-                    greenButton.setFill(color_rgb(0, 255, 0))
-                    winsound.Beep(1500, 300)
-                    greenButton.setFill(color_rgb(0, 0, 0))
-                elif count == "B":
-                    blueButton.setFill(color_rgb(0, 0, 255))
-                    winsound.Beep(2000, 300)
-                    blueButton.setFill(color_rgb(0, 0, 0))
+                buttonDict.get(count, None).blink(300, 0)
             else:
                 game_Over = True
                 break
@@ -131,16 +118,5 @@ def main():
     gameOver.draw(win)
     win.getKey()
     win.close()
-    
-    # def gameOver():
-    #    gameOver = Text(Point(480, 360), "GAME OVER")
-    #    gameOver.setSize(30)
-    #    gameOver.setTextColor(color_rgb(255, 0, 0))
-    #    gameOver.draw(win)
-    #    time.sleep(3)
-    #    gameOver.undraw()
-    #    stack = [""]
-    #    win.close()
-
 
 main()
