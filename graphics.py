@@ -12,7 +12,7 @@ GPL (http://www.gnu.org/licenses/gpl.html).
 PLATFORMS: The package is a wrapper around Tkinter and should run on
 any platform where Tkinter is available.
 
-INSTALLATION: Put this file somewhere where Python can see it.
+INSTALLATION: Put this file somewhere where Python can see it
 
 OVERVIEW: There are two kinds of objects in the library. The GraphWin
 class implements a window where drawing can be done and various
