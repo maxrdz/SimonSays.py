@@ -1,6 +1,6 @@
-from graphics import *  # Importing graphics.py library and functions
-from random import *  # Imports random library from Python
-import winsound  # Imports Windows Sound library to make beeps, only on windows computer.
+from graphics import *
+from random import *
+import winsound
 
 
 colorsDict = {"R": color_rgb(255, 0, 0), "Y": color_rgb(255, 255, 0), "G": color_rgb(0, 255, 0), "B": color_rgb(0, 0, 255)}
@@ -68,8 +68,6 @@ def main():
     startTxt.setSize(30)
     startTxt.setTextColor(color_rgb(255, 102, 102))
     startTxt.draw(win)
-
-    # Wait for any key to start game      v  v
 
     win.getKey()
     startTxt.undraw()
